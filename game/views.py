@@ -9,18 +9,32 @@ from rest_framework.decorators import api_view
 from .serializers import StartGameSerializers, CreateRoundSerializer, ListGameSerializer, ActionSerializer
 # Django
 from django.utils import timezone
+from django.db.transaction import atomic
 
 
-@api_view(['POST'])
-def create(request):
-    Action.objects.create(name="Rock")
-    Action.objects.create(name="Paper")
-    Action.objects.create(name="Scissors")
+@api_view(['GET'])
+@atomic
+def set_up(request):
+    """
+    This function allows to provide the initial actions and win conditions
+    after a deploy to Heroku.
+    :param request:
+    :return: 200
+    """
+    rock = Action.objects.create(name="Rock")
+    paper = Action.objects.create(name="Paper")
+    scissors = Action.objects.create(name="Scissors")
+    WinCondition.objects.create(killer=rock, victim=scissors)
+    WinCondition.objects.create(killer=paper, victim=rock)
+    WinCondition.objects.create(killer=scissors, victim=paper)
 
     return Response(data={"": ""}, status=200)
 
 
 class ListActions(generics.ListAPIView):
+    """
+    Allows to list all the possible actions
+    """
     serializer_class = ActionSerializer
     queryset = Action.objects.all()
 

@@ -174,6 +174,7 @@ class ListGameSerializer(serializers.ModelSerializer):
 
 
 class ActionSerializer(serializers.ModelSerializer):
+    id = serializers.IntegerField(read_only=True)
 
     class Meta:
         model = Action
