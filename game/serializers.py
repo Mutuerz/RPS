@@ -85,7 +85,11 @@ class CreateRoundSerializer(serializers.ModelSerializer):
         return obj.game.is_finished
 
     def get_winner(self, obj):
-        return obj.winner.name
+        try:
+            name = obj.winner.name
+        except AttributeError:
+            name = None
+        return name
 
     def get_score(self, obj):
         # Player_1 score
