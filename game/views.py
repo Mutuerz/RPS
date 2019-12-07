@@ -3,10 +3,18 @@ from player.models import Player
 from game.models import Game, Round, WinCondition, Game, Action
 # Django Rest
 from rest_framework import generics
+from rest_framework.response import Response
+from rest_framework.decorators import api_view
 # Serializers
 from .serializers import StartGameSerializers, CreateRoundSerializer, ListGameSerializer, ActionSerializer
 # Django
 from django.utils import timezone
+
+
+@api_view(['POST'])
+def create(request):
+    return Response(data={"": ""}, status=200)
+    #Action.objects.create(name="Rock")
 
 
 class ListActions(generics.ListAPIView):
