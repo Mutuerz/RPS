@@ -1,13 +1,15 @@
 # Django rest
 from rest_framework import generics
-from rest_framework.response import Response
-# Serializers
-from player.serializers import ListPlayerSerializer
 # Models
 from .models import Player
+# Serializers
+from player.serializers import ListPlayerSerializer
 
 
 class ListPlayers(generics.ListAPIView):
+    """
+    List players allowing filtering and ordering
+    """
     serializer_class = ListPlayerSerializer
 
     def get_queryset(self):

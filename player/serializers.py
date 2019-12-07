@@ -7,26 +7,17 @@ from rest_framework import serializers
 from django.db.models import Q
 
 
-class CreatePlayerSerializer(serializers.ModelSerializer):
-    name = serializers.CharField(min_length=3, max_length=50)
-
-    class Meta:
-        model = Player
-        fields = ['name']
-
-    def create(self, validated_data):
-        player = Player(
-            name=validated_data['name'],
-        )
-        player.save()
-        return player
-
-
 class PlayerSerializer(serializers.Serializer):
+    """
+    Validates player's names
+    """
     name = serializers.CharField(min_length=3, max_length=50)
 
 
 class ListPlayerSerializer(serializers.ModelSerializer):
+    """
+    List player's statistics
+    """
     games_won = serializers.SerializerMethodField()
     rounds_won = serializers.SerializerMethodField()
     games_played = serializers.SerializerMethodField()

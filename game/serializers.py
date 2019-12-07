@@ -4,7 +4,7 @@ from player.models import Player
 # Django Rest
 from rest_framework import serializers
 # Serializers
-from player.serializers import CreatePlayerSerializer, PlayerSerializer
+from player.serializers import PlayerSerializer
 # Django
 from django.db.transaction import atomic
 from django.db.models import Q
@@ -13,6 +13,9 @@ from django.utils import timezone
 
 # Todo: Comment all classes
 class ReadRoundSerializer(serializers.ModelSerializer):
+    """
+    Serializes winner of a round
+    """
     winner = PlayerSerializer()
 
     class Meta:
@@ -21,6 +24,9 @@ class ReadRoundSerializer(serializers.ModelSerializer):
 
 
 class CreateRoundSerializer(serializers.ModelSerializer):
+    """
+    Allows creation of a round
+    """
     is_game_finished = serializers.SerializerMethodField()
     winner = serializers.SerializerMethodField()
     score = serializers.SerializerMethodField()
@@ -103,6 +109,9 @@ class CreateRoundSerializer(serializers.ModelSerializer):
 
 
 class StartGameSerializers(serializers.ModelSerializer):
+    """
+    Allows creation of a game and registering new players
+    """
     id = serializers.IntegerField(read_only=True)
     player_1 = PlayerSerializer()
     player_2 = PlayerSerializer()

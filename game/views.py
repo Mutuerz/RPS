@@ -3,26 +3,30 @@ from player.models import Player
 from game.models import Game, Round, WinCondition, Game, Action
 # Django Rest
 from rest_framework import generics
-from rest_framework.response import Response
-from rest_framework.decorators import api_view
 # Serializers
 from .serializers import StartGameSerializers, CreateRoundSerializer, ListGameSerializer
-from player.serializers import CreatePlayerSerializer, ListPlayerSerializer
 # Django
-from django.db.transaction import atomic
-from django.db.models import Q
 from django.utils import timezone
 
 
 class StartGame(generics.CreateAPIView):
+    """
+    Creates a game of RPS between two players
+    """
     serializer_class = StartGameSerializers
 
 
 class StartRound(generics.CreateAPIView):
+    """
+    Creates a round of Rock, Paper, Scissors
+    """
     serializer_class = CreateRoundSerializer
 
 
 class ListGamesWon(generics.ListAPIView):
+    """
+    Lists the games won by a player
+    """
     serializer_class = ListGameSerializer
 
     def get_queryset(self):
