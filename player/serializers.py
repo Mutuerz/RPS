@@ -43,5 +43,3 @@ class ListPlayerSerializer(serializers.ModelSerializer):
 
     def get_games_played(self, player):
         return Game.objects.filter(Q(player_1=player) | Q(player_2=player)).count()
-
-

@@ -139,3 +139,26 @@ class StartGameSerializers(serializers.ModelSerializer):
         game = Game(player_1=player_1, player_2=player_2)
         game.save()
         return game
+
+
+class ListGameSerializer(serializers.ModelSerializer):
+    """
+    This class allows to validate the requested
+    player's id and returns the data about his games
+    """
+    player_id = serializers.IntegerField(read_only=True)  # The requested player's id
+    player_1 = PlayerSerializer(read_only=True)
+    player_2 = PlayerSerializer(read_only=True)
+    winner = PlayerSerializer(read_only=True)
+
+    class Meta:
+        model = Game
+        fields = ['player_id', 'player_1', 'player_2', 'winner', 'started_at', 'finished_at']
+
+    def validate(self, data):
+        # Here we validate that the requested user exists
+        serializers.ValidationError("The requested player does not exist")
+        try:
+            Player.objects.get(id=data['player_id'])
+        except Player.DoesNotExist:
+            raise serializers.ValidationError("The requested player does not exist")
