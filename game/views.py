@@ -7,7 +7,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 # Serializers
 from .serializers import StartGameSerializers, CreateRoundSerializer
-from player.serializers import CreatePlayerSerializer
+from player.serializers import CreatePlayerSerializer, ListPlayerSerializer
 # Django
 from django.db.transaction import atomic
 from django.db.models import Q
@@ -20,4 +20,3 @@ class StartGame(generics.CreateAPIView):
 
 class StartRound(generics.CreateAPIView):
     serializer_class = CreateRoundSerializer
-

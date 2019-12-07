@@ -25,6 +25,10 @@ INSTALLED_APPS = [
     'game',
 ]
 
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'Helpers.pagination.CustomPagination'
+}
+
 MIDDLEWARE = []
 
 ROOT_URLCONF = 'RPS.urls'
