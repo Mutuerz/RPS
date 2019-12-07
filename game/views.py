@@ -13,8 +13,11 @@ from django.utils import timezone
 
 @api_view(['POST'])
 def create(request):
+    Action.objects.create(name="Rock")
+    Action.objects.create(name="Paper")
+    Action.objects.create(name="Scissors")
+
     return Response(data={"": ""}, status=200)
-    #Action.objects.create(name="Rock")
 
 
 class ListActions(generics.ListAPIView):
