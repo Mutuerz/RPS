@@ -11,6 +11,14 @@ from django.db.models import Q
 from django.utils import timezone
 
 
+class ReadRoundSerializer(serializers.ModelSerializer):
+    winner = PlayerSerializer()
+
+    class Meta:
+        model = Round
+        fields = ['winner', 'played_at']
+
+
 class CreateRoundSerializer(serializers.ModelSerializer):
     is_game_finished = serializers.SerializerMethodField()
     winner = serializers.SerializerMethodField()
@@ -61,6 +69,7 @@ class CreateRoundSerializer(serializers.ModelSerializer):
         if rounds_amount >= 3:
             round.game.is_finished = True
             round.game.finished_at = timezone.now()
+            round.game.winner = winner
             round.game.save()
 
         return round
@@ -80,8 +89,14 @@ class CreateRoundSerializer(serializers.ModelSerializer):
         player_2 = Game.objects.get(id=obj.game.id).player_2
         player_2_score = Round.objects.filter(winner=player_2).count()
 
-        score = {"player_1": {"name": player_1.name, "score": player_1_score},
-                 "player_2": {"name": player_2.name, "score": player_2_score}}
+        rounds = Round.objects.filter(id=obj.id).order_by('played_at')
+        serializer = ReadRoundSerializer(rounds, many=True)
+
+        score = {
+            "previous_rounds": serializer.data,
+            "player_1": {"name": player_1.name, "score": player_1_score},
+            "player_2": {"name": player_2.name, "score": player_2_score}
+        }
         return score
 
 
