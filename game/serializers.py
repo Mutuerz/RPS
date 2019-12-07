@@ -1,5 +1,5 @@
 # Models
-from game.models import Round, WinCondition, Game
+from game.models import Round, WinCondition, Game, Action
 from player.models import Player
 # Django Rest
 from rest_framework import serializers
@@ -171,3 +171,10 @@ class ListGameSerializer(serializers.ModelSerializer):
             Player.objects.get(id=data['player_id'])
         except Player.DoesNotExist:
             raise serializers.ValidationError("The requested player does not exist")
+
+
+class ActionSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Action
+        fields = ['id', 'name']

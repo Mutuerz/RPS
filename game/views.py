@@ -4,9 +4,14 @@ from game.models import Game, Round, WinCondition, Game, Action
 # Django Rest
 from rest_framework import generics
 # Serializers
-from .serializers import StartGameSerializers, CreateRoundSerializer, ListGameSerializer
+from .serializers import StartGameSerializers, CreateRoundSerializer, ListGameSerializer, ActionSerializer
 # Django
 from django.utils import timezone
+
+
+class ListActions(generics.ListAPIView):
+    serializer_class = ActionSerializer
+    queryset = Action.objects.all()
 
 
 class StartGame(generics.CreateAPIView):
