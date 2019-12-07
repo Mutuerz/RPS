@@ -1,1 +1,1 @@
-web: gunicorn RPS.RPS.wsgi
+web: gunicorn RPS.wsgi --log-file -
