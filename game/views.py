@@ -21,12 +21,9 @@ def set_up(request):
     :param request:
     :return: 200
     """
-    rock = Action.objects.create(name="Rock")
-    paper = Action.objects.create(name="Paper")
-    scissors = Action.objects.create(name="Scissors")
-    WinCondition.objects.create(killer=rock, victim=scissors)
-    WinCondition.objects.create(killer=paper, victim=rock)
-    WinCondition.objects.create(killer=scissors, victim=paper)
+    Action.objects.get(id=4).delete()
+    Action.objects.get(id=5).delete()
+    Action.objects.get(id=6).delete()
 
     return Response(data={"response": "ok"}, status=200)
 
