@@ -21,6 +21,9 @@ def set_up(request):
     :param request:
     :return: 200
     """
+    WinCondition.objects.get(id=4).delete()
+    WinCondition.objects.get(id=5).delete()
+    WinCondition.objects.get(id=6).delete()
     Action.objects.get(id=4).delete()
     Action.objects.get(id=5).delete()
     Action.objects.get(id=6).delete()
