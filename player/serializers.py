@@ -18,13 +18,14 @@ class ListPlayerSerializer(serializers.ModelSerializer):
     """
     List player's statistics
     """
+    id = serializers.IntegerField(read_only=True)
     games_won = serializers.SerializerMethodField()
     rounds_won = serializers.SerializerMethodField()
     games_played = serializers.SerializerMethodField()
 
     class Meta:
         model = Player
-        fields = ['name', 'games_won', 'rounds_won', 'games_played']
+        fields = ['id', 'name', 'games_won', 'rounds_won', 'games_played']
 
     def get_games_won(self, player):
         return Game.objects.filter(winner=player).count()
