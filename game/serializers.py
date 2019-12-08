@@ -11,7 +11,6 @@ from django.db.models import Q
 from django.utils import timezone
 
 
-# Todo: Comment all classes
 class ReadRoundSerializer(serializers.ModelSerializer):
     """
     Serializes winner of a round
@@ -92,16 +91,17 @@ class CreateRoundSerializer(serializers.ModelSerializer):
         return name
 
     def get_score(self, obj):
+        current_game = Game.objects.get(id=obj.game.id)
         # Player_1 score
         player_1 = Game.objects.get(id=obj.game.id).player_1
-        player_1_score = Round.objects.filter(winner=player_1).count()
+        player_1_score = Round.objects.filter(game=current_game, winner=player_1).count()
 
         # Player_2 score
         player_2 = Game.objects.get(id=obj.game.id).player_2
-        player_2_score = Round.objects.filter(winner=player_2).count()
+        player_2_score = Round.objects.filter(game=current_game, winner=player_2).count()
 
         # Here we get the rounds that has been played
-        rounds = Round.objects.filter(game=Game.objects.get(id=obj.game.id)).order_by('played_at')
+        rounds = Round.objects.filter(game=current_game).order_by('played_at')
         serializer = ReadRoundSerializer(rounds, many=True)
 
         score = {

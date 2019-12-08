@@ -17,7 +17,6 @@ from django.db.transaction import atomic
 def set_up(request):
     """
     This function allows to provide the initial actions and win conditions
-    after a deploy to Heroku.
     :param request:
     :return: 200
     """
