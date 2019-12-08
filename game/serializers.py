@@ -13,7 +13,7 @@ from django.utils import timezone
 
 class ReadRoundSerializer(serializers.ModelSerializer):
     """
-    Serializes winner of a round
+    Serializes round winner
     """
     winner = PlayerSerializer()
 
@@ -24,7 +24,7 @@ class ReadRoundSerializer(serializers.ModelSerializer):
 
 class CreateRoundSerializer(serializers.ModelSerializer):
     """
-    Allows creation of a round
+    Allows round creation
     """
     is_game_finished = serializers.SerializerMethodField()
     winner = serializers.SerializerMethodField()
@@ -182,6 +182,9 @@ class ListGameSerializer(serializers.ModelSerializer):
 
 
 class ActionSerializer(serializers.ModelSerializer):
+    """
+    Serializes the possible actions a player can take
+    """
     id = serializers.IntegerField(read_only=True)
 
     class Meta:
