@@ -12,25 +12,6 @@ from django.utils import timezone
 from django.db.transaction import atomic
 
 
-@api_view(['GET'])
-@atomic
-def set_up(request):
-    """
-    This function allows to provide the initial actions and win conditions
-    after a deploy to Heroku.
-    :param request:
-    :return: 200
-    """
-    WinCondition.objects.get(id=4).delete()
-    WinCondition.objects.get(id=5).delete()
-    WinCondition.objects.get(id=6).delete()
-    Action.objects.get(id=4).delete()
-    Action.objects.get(id=5).delete()
-    Action.objects.get(id=6).delete()
-
-    return Response(data={"response": "ok"}, status=200)
-
-
 class ListActions(generics.ListAPIView):
     """
     Allows to list all the possible actions
