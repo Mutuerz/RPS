@@ -138,9 +138,11 @@ class StartGameSerializers(serializers.ModelSerializer):
             player_2 = Player.objects.create(name=data['player_2']['name'])
 
         # Here we check if any of the players has an unfinished game
-        if Game.objects.filter(Q(player_1=player_1, is_finished=False) | Q(player_2=player_1)).first() is not None:
+        if Game.objects.filter(Q(player_1=player_1, is_finished=False) |
+                               Q(player_2=player_1, is_finished=False)).first() is not None:
             raise serializers.ValidationError(str(player_1.name) + " still has an unfinished game")
-        if Game.objects.filter(Q(player_1=player_2, is_finished=False) | Q(player_2=player_2)).first() is not None:
+        if Game.objects.filter(Q(player_1=player_2, is_finished=False) |
+                               Q(player_2=player_2, is_finished=False)).first() is not None:
             raise serializers.ValidationError(str(player_2.name) + " still has an unfinished game")
 
         return data
