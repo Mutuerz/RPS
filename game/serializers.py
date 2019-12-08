@@ -173,6 +173,8 @@ class ListGameSerializer(serializers.ModelSerializer):
         serializers.ValidationError("The requested player does not exist")
         try:
             Player.objects.get(id=data['player_id'])
+        except KeyError:
+            raise serializers.ValidationError("The field 'player_id' is required")
         except Player.DoesNotExist:
             raise serializers.ValidationError("The requested player does not exist")
 
