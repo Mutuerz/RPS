@@ -28,7 +28,7 @@ def set_up(request):
     WinCondition.objects.create(killer=paper, victim=rock)
     WinCondition.objects.create(killer=scissors, victim=paper)
 
-    return Response(data={"": ""}, status=200)
+    return Response(data={"response": "ok"}, status=200)
 
 
 class ListActions(generics.ListAPIView):
