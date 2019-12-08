@@ -86,9 +86,9 @@ class ListGamesWon(generics.ListAPIView):
         # Finally we create the queryset
         if start_date is None:
             queryset = Game.objects.filter(winner=player).order_by(
-                order_dict.get(data.get('order_title', 'finished_at')))
+                order_dict.get(data.get('order_title', 'finished_at'), 'finished_at'))
         else:
             queryset = Game.objects.filter(finished_at__range=(start_date, end_date)).order_by(
-                order_dict.get(data.get('order_title', 'finished_at')))
+                order_dict.get(data.get('order_title', 'finished_at'), 'finished_at'))
 
         return queryset
